@@ -1,5 +1,8 @@
-reservedWords = []
-testList = ["aa:aaa", "a", "a"]
+reservedWords = ["copy", "move", "delete"]
+testString = """copy: hello
+delete: hello
+nah: 
+bruh"""
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
     return l
@@ -30,13 +33,30 @@ def getReservedWordID(inputList):
         else:
             b.append("")
     for i in range(len(l)):
-        both.append([l[i], b[i]])
+        both.append([l[i], b[i].strip(" ")])
     i = 0
     for i in range(len(both)):
         try:
             both[i][0] = reservedWords.index(both[i][0])
         except ValueError:
-            print(f"Your command at line {i} is not correct. \nYour code has been executed without the command '{both[i][0]}'")
+            print(f"Your command at line {i} is not correct. \nYour code has been executed without the command '{both[i][0]}'.")
             both[i][0] = ""
     return both
-print(getReservedWordID(testList))
+
+
+
+
+
+
+
+
+
+
+def main(inputString):
+    a = lineSeperator(inputString)
+    a = getReservedWordID(a)
+
+    return a
+
+
+print(main(testString))
