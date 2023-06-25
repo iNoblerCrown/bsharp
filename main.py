@@ -79,5 +79,10 @@ def main(inputString, mode):
         executeAll(a)
     return a
 
+def start():
+    x = input("Your code:\n")
+    y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])")
+    main(x, y)
 
-print(main(testString))
+
+start()
