@@ -1,10 +1,10 @@
 reservedWords = ["copy", "move", "delete"]
-pythonVersion = ["os.copy", "os.?", "os.remove"]
-testString = """delete: "hello"
-nah: 
-bruh"""
+pythonVersion = ["shutil.copy", "os.?", "os.remove"]
+
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
+    for x in range(len(l)):
+        l[x] = l[x].replace("to", "")
     return l
 
 def getReservedWordID(inputList):
@@ -40,7 +40,7 @@ def getReservedWordID(inputList):
 
 
 def convertToPY(arrayOfCode):
-    output = str("import os\n")
+    output = str("import os\nimport shutil\n")
     for x in range(len(arrayOfCode)):
         if arrayOfCode[x][0] != "":
             output += pythonVersion[int(arrayOfCode[x][0])]
@@ -63,7 +63,7 @@ def JITExecution(stringOfPyCode):
         try:
             exec(l[x])
         except Exception as i:
-            print(f"The error {i} has occured at line {x + 1}. \n All other code has been executed successfully.")
+            print(f"The error '{i}' has occured at line {x + 1}. \n All other code has been executed successfully.")
             y = False
     if y == True:
         print("Your code has worked flawlessly")
@@ -74,14 +74,14 @@ def main(inputString, mode):
     a = getReservedWordID(a)
     a = convertToPY(a)
     if mode == "step-by-step" or mode == "sbs":
-        ""
+        JITExecution(a)
     elif mode == "all-at-once" or mode == "aao":
         executeAll(a)
     return a
 
 def start():
     x = input("Your code:\n")
-    y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])")
+    y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])\n")
     main(x, y)
 
 
