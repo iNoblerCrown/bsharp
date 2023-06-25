@@ -1,6 +1,6 @@
 reservedWords = ["copy", "move", "delete"]
-testString = """copy: hello
-delete: hello
+pythonVersion = ["os.copy", "os.?", "os.remove"]
+testString = """delete: "hello"
 nah: 
 bruh"""
 def lineSeperator(inputstring):
@@ -8,12 +8,7 @@ def lineSeperator(inputstring):
     return l
 
 def getReservedWordID(inputList):
-    IDs = {}
-    for x in range(len(inputList)):
-        d = {
-            x : ""
-        }
-        IDs.update(d)
+
     l = []  #list of commands (used reserved words)
     t = []  #location of parameter divider ":"
     b = [] #parameters
@@ -44,18 +39,44 @@ def getReservedWordID(inputList):
     return both
 
 
+def convertToPY(arrayOfCode):
+    output = str("import os\n")
+    for x in range(len(arrayOfCode)):
+        if arrayOfCode[x][0] != "":
+            output += pythonVersion[int(arrayOfCode[x][0])]
+            output += "(" + arrayOfCode[x][1] + ")\n"
+    return output
+
+def executeAll(stringOfPyCode):
+    y = True
+    try:
+        exec(stringOfPyCode)
+    except Exception as x:
+        print(f"The Error '{x}' has occured.")
+        y = False
+    if y == True:
+        print("Your code has worked flawlessly")
+
+def JITExecution(stringOfPyCode):
+    l = stringOfPyCode.split("\n")
+    for x in range(len(l)):
+        try:
+            exec(l[x])
+        except Exception as i:
+            print(f"The error {i} has occured at line {x + 1}. \n All other code has been executed successfully.")
+            y = False
+    if y == True:
+        print("Your code has worked flawlessly")
 
 
-
-
-
-
-
-
-def main(inputString):
+def main(inputString, mode):
     a = lineSeperator(inputString)
     a = getReservedWordID(a)
-
+    a = convertToPY(a)
+    if mode == "step-by-step" or mode == "sbs":
+        ""
+    elif mode == "all-at-once" or mode == "aao":
+        executeAll(a)
     return a
 
 
