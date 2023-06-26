@@ -1,5 +1,7 @@
 reservedWords = ["move", "delete"]
 pythonVersion = ["os.?", "os.remove"]
+output = str("")
+
 
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
@@ -8,10 +10,19 @@ def lineSeperator(inputstring):
     return l
 
 def commandCheck(inputList):
-    output = str("")
     for x in range(len(inputList)):
         if "=" in inputList[x]:
             output += f"{inputList[x]}\n"
+        elif "loop":
+            "Loop system einbauen"
+    return output
+
+def secondaryCommandCheck(inputList):
+    for x in range(len(inputList)):
+        if "=" in inputList[x]:
+            inputList[x] = ""
+        elif "loop property":
+            "LOOP PROPERTY EINBAUEN"
 
 def getReservedWordID(inputList, checkedCode):
 
@@ -46,12 +57,12 @@ def getReservedWordID(inputList, checkedCode):
 
 
 def convertToPY(arrayOfCode, currentOutput):
-    output = str(f"import os\nimport shutil\n{currentOutput}\n")
+    b = str(f"import os\nimport shutil\n{currentOutput}\n")
     for x in range(len(arrayOfCode)):
         if arrayOfCode[x][0] != "":
-            output += pythonVersion[int(arrayOfCode[x][0])]
-            output += "(" + arrayOfCode[x][1] + ")\n"
-    return output
+            b += pythonVersion[int(arrayOfCode[x][0])]
+            b += "(" + arrayOfCode[x][1] + ")\n"
+    return b
 
 def executeAll(stringOfPyCode):
     y = True
@@ -78,6 +89,7 @@ def JITExecution(stringOfPyCode):
 def main(inputString, mode):
     a = lineSeperator(inputString)
     y = commandCheck(a)
+    a = secondaryCommandCheck(a)
     a = getReservedWordID(a, y)
     a = convertToPY(a, y)
     if mode == "step-by-step" or mode == "sbs":
