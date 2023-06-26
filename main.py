@@ -1,6 +1,6 @@
 reservedWords = ["move", "delete"]
 pythonVersion = ["os.?", "os.remove"]
-output = str("")
+
 
 
 def lineSeperator(inputstring):
@@ -10,6 +10,7 @@ def lineSeperator(inputstring):
     return l
 
 def commandCheck(inputList):
+    output = str("")
     for x in range(len(inputList)):
         if "=" in inputList[x]:
             output += f"{inputList[x]}\n"
@@ -23,6 +24,7 @@ def secondaryCommandCheck(inputList):
             inputList[x] = ""
         elif "loop property":
             "LOOP PROPERTY EINBAUEN"
+    return inputList
 
 def getReservedWordID(inputList, checkedCode):
 
