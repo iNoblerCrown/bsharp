@@ -1,5 +1,5 @@
-reservedWords = ["copy", "move", "delete"]
-pythonVersion = ["shutil.copy", "os.?", "os.remove"]
+reservedWords = ["move", "delete"]
+pythonVersion = ["os.?", "os.remove"]
 
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
@@ -7,7 +7,13 @@ def lineSeperator(inputstring):
         l[x] = l[x].replace("to", "")
     return l
 
-def getReservedWordID(inputList):
+def commandCheck(inputList):
+    output = str("")
+    for x in range(len(inputList)):
+        if "=" in inputList[x]:
+            output += f"{inputList[x]}\n"
+
+def getReservedWordID(inputList, checkedCode):
 
     l = []  #list of commands (used reserved words)
     t = []  #location of parameter divider ":"
@@ -39,8 +45,8 @@ def getReservedWordID(inputList):
     return both
 
 
-def convertToPY(arrayOfCode):
-    output = str("import os\nimport shutil\n")
+def convertToPY(arrayOfCode, currentOutput):
+    output = str(f"import os\nimport shutil\n{currentOutput}\n")
     for x in range(len(arrayOfCode)):
         if arrayOfCode[x][0] != "":
             output += pythonVersion[int(arrayOfCode[x][0])]
@@ -71,8 +77,9 @@ def JITExecution(stringOfPyCode):
 
 def main(inputString, mode):
     a = lineSeperator(inputString)
-    a = getReservedWordID(a)
-    a = convertToPY(a)
+    y = commandCheck(a)
+    a = getReservedWordID(a, y)
+    a = convertToPY(a, y)
     if mode == "step-by-step" or mode == "sbs":
         JITExecution(a)
     elif mode == "all-at-once" or mode == "aao":
