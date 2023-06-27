@@ -58,6 +58,7 @@ def getReservedWordID(inputList):
     for i in range(len(both)):
         if both[i][0] == "create":
             both[i][1] += ", 'w'"
+            both.insert(i + 1, ["file.close()", ""])
         try:
             both[i][0] = reservedWords.index(both[i][0])
         except ValueError:
@@ -70,7 +71,9 @@ def getReservedWordID(inputList):
 def convertToPY(arrayOfCode, currentOutput):
     b = str(f"import os\nimport shutil\n{currentOutput}\n")
     for x in range(len(arrayOfCode)):
-        if arrayOfCode[x][0] != "":
+        if arrayOfCode[x][0] == "file.close()":
+            b += "file.close()\n"
+        elif arrayOfCode[x][0] != "":
             b += pythonVersion[int(arrayOfCode[x][0])]
             b += "(" + arrayOfCode[x][1] + ")\n"
     return b
@@ -98,7 +101,13 @@ def JITExecution(stringOfPyCode):
         print("Your code has worked flawlessly")
 
 def getExecutionMethod():
-    y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])\n")
+    x = False
+    while x != True:
+        y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])\n")
+        if y == "sbs":
+            x = True
+        elif y == "aao":
+            x = True
     return y
 
 def main(inputString):
@@ -108,13 +117,14 @@ def main(inputString):
     a = getReservedWordID(a)
     mode = getExecutionMethod()
     a = convertToPY(a, y)
+
     if mode == "step-by-step" or mode == "sbs":
         JITExecution(a)
     elif mode == "all-at-once" or mode == "aao":
         executeAll(a)
     else:
         print("Unvalid execution method.")
-        exit()
+
     return a
 
 def start():
