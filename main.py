@@ -1,5 +1,5 @@
-reservedWords = ["move", "delete"]
-pythonVersion = ["os.?", "os.remove"]
+reservedWords = ["move", "delete", "say", "create"]
+pythonVersion = ["os.?", "os.remove", "print", "file = open"]
 
 
 
@@ -16,6 +16,7 @@ def commandCheck(inputList):
             output += f"{inputList[x]}\n"
         elif "loop":
             "Loop system einbauen"
+
     return output
 
 def secondaryCommandCheck(inputList):
@@ -26,7 +27,7 @@ def secondaryCommandCheck(inputList):
             "LOOP PROPERTY EINBAUEN"
     return inputList
 
-def getReservedWordID(inputList, checkedCode):
+def getReservedWordID(inputList):
 
     l = []  #list of commands (used reserved words)
     t = []  #location of parameter divider ":"
@@ -47,14 +48,20 @@ def getReservedWordID(inputList, checkedCode):
         else:
             b.append("")
     for i in range(len(l)):
-        both.append([l[i], b[i].strip(" ")])
+        try:
+            both.append([l[i], b[i].strip(" ")])
+        except:
+            ""
     i = 0
     for i in range(len(both)):
+        if both[i][0] == "create":
+            both[i][1] += ", 'w'"
         try:
             both[i][0] = reservedWords.index(both[i][0])
         except ValueError:
-            print(f"Your command at line {i} is not correct. \nYour code has been executed without the command '{both[i][0]}'.")
-            both[i][0] = ""
+            if both[i][0] != "":
+                print(f"Your command at line {i} is not correct. \nYour code has been executed without the command '{both[i][0]}'.")
+                both[i][0] = ""
     return both
 
 
@@ -92,7 +99,7 @@ def main(inputString, mode):
     a = lineSeperator(inputString)
     y = commandCheck(a)
     a = secondaryCommandCheck(a)
-    a = getReservedWordID(a, y)
+    a = getReservedWordID(a)
     a = convertToPY(a, y)
     if mode == "step-by-step" or mode == "sbs":
         JITExecution(a)
@@ -105,5 +112,9 @@ def start():
     y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])\n")
     main(x, y)
 
+#Test string
+#main("""a = 1
+#b = 2
+#say: a + b""", "aao")
 
 start()
