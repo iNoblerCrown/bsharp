@@ -1,4 +1,6 @@
 # The b# programming language
+### Created by Kadir Aras Yanar
+©️ Kadir Aras Yanar 2023
 
 ## How to install b#
 1. Download all of the files from the page.
@@ -9,6 +11,3 @@
 
 ## Documentary:
 Coming soon 😊
-
-### Created by Kadir Aras Yanar
-©️ Kadir Aras Yanar 2023
