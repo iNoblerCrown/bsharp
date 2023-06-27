@@ -6,7 +6,7 @@ pythonVersion = ["shutil.move", "os.remove", "print", "file = open", "os.rename"
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
     for x in range(len(l)):
-        l[x] = l[x].replace("to", ",").replace("from", "")
+        l[x] = l[x].replace(" to ", ",").replace("from", "")
     return l
 
 def commandCheck(inputList):
