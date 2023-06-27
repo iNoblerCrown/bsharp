@@ -11,6 +11,7 @@ def lineSeperator(inputstring):
 
 def commandCheck(inputList):
     if inputList[0] == "close":
+        print("b# has been closed.")
         exit()
     output = str("")
     for x in range(len(inputList)):
@@ -86,7 +87,9 @@ def executeAll(stringOfPyCode):
         print(f"The Error '{x}' has occured.")
         y = False
     if y == True:
-        print("Your code has worked flawlessly")
+        ""
+        #print("Your code has worked flawlessly")
+    start()
 
 def JITExecution(stringOfPyCode):
     y = True
@@ -95,10 +98,12 @@ def JITExecution(stringOfPyCode):
         try:
             exec(l[x])
         except Exception as i:
-            print(f"The error '{i}' has occured at line {x - 2}. \n All other code has been executed successfully.")
+            print(f"The error '{i}' has occured at {l[x]} (in python). \n All other code has been executed successfully.")
             y = False
     if y == True:
-        print("Your code has worked flawlessly")
+        ""
+        #print("Your code has worked flawlessly")
+    start()
 
 def getExecutionMethod():
     x = False
@@ -122,14 +127,34 @@ def main(inputString):
         JITExecution(a)
     elif mode == "all-at-once" or mode == "aao":
         executeAll(a)
+    elif mode == "close":
+        exit()
     else:
         print("Unvalid execution method.")
 
     return a
 
+def readFromFile(x):
+    file = open(x, "r")
+    code = file.read()
+    file.close()
+    return code
+
+
 def start():
     x = input("Your code:\n")
-    main(x)
+    if "execute" in x:
+        turn = 0
+        for y in x:
+            turn += 1
+            if x[turn] == ":":
+                x = x[turn:].strip(' :"')
+                break
+        a = readFromFile(x)
+        print(f"Code to execute:\n{a}")
+        main(a)
+    else:
+        main(x)
 
 #Test string
 #main("""a = 1
