@@ -1,7 +1,8 @@
-reservedWords = ["move", "delete", "say", "create", "rename", "close"]
-pythonVersion = ["shutil.move", "os.remove", "print", "file = open", "os.rename", "exit()"]
+reservedWords = ["move", "delete", "say", "create", "rename", "close", "copy"]
+pythonVersion = ["shutil.move", "os.remove", "print", "file = open", "os.rename", "exit()", "shutil.copy"]
 
-
+#TODO: Create a loop system; Form a team to work with;
+#! Create a documentary and a new repository when b# has its first release!!!
 
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
