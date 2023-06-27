@@ -9,3 +9,6 @@
 
 ## Documentary:
 Coming soon 😊
+
+### Created by Kadir Aras Yanar
+©️ Kadir Aras Yanar 2023
