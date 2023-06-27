@@ -1,15 +1,17 @@
-reservedWords = ["move", "delete", "say", "create"]
-pythonVersion = ["os.?", "os.remove", "print", "file = open"]
+reservedWords = ["move", "delete", "say", "create", "rename", "close"]
+pythonVersion = ["shutil.move", "os.remove", "print", "file = open", "os.rename", "exit()"]
 
 
 
 def lineSeperator(inputstring):
     l = inputstring.split("\n")
     for x in range(len(l)):
-        l[x] = l[x].replace("to", "")
+        l[x] = l[x].replace("to", ",").replace("from", "")
     return l
 
 def commandCheck(inputList):
+    if inputList[0] == "close":
+        exit()
     output = str("")
     for x in range(len(inputList)):
         if "=" in inputList[x]:
@@ -84,33 +86,40 @@ def executeAll(stringOfPyCode):
         print("Your code has worked flawlessly")
 
 def JITExecution(stringOfPyCode):
+    y = True
     l = stringOfPyCode.split("\n")
     for x in range(len(l)):
         try:
             exec(l[x])
         except Exception as i:
-            print(f"The error '{i}' has occured at line {x + 1}. \n All other code has been executed successfully.")
+            print(f"The error '{i}' has occured at line {x - 2}. \n All other code has been executed successfully.")
             y = False
     if y == True:
         print("Your code has worked flawlessly")
 
+def getExecutionMethod():
+    y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])\n")
+    return y
 
-def main(inputString, mode):
+def main(inputString):
     a = lineSeperator(inputString)
     y = commandCheck(a)
     a = secondaryCommandCheck(a)
     a = getReservedWordID(a)
+    mode = getExecutionMethod()
     a = convertToPY(a, y)
     if mode == "step-by-step" or mode == "sbs":
         JITExecution(a)
     elif mode == "all-at-once" or mode == "aao":
         executeAll(a)
+    else:
+        print("Unvalid execution method.")
+        exit()
     return a
 
 def start():
     x = input("Your code:\n")
-    y = input("How should the code be executed?\n(all-at-once [aao] or step-by-step [sbs])\n")
-    main(x, y)
+    main(x)
 
 #Test string
 #main("""a = 1
