@@ -1,5 +1,5 @@
-reservedWords = ["move", "delete", "say", "create", "rename", "close", "copy"]
-pythonVersion = ["shutil.move", "os.remove", "print", "file = open", "os.rename", "exit()", "shutil.copy"]
+reservedWords = ["move", "delete", "say", "create", "rename", "close", "copy", "loop"]
+pythonVersion = ["shutil.move", "os.remove", "print", "file = open", "os.rename", "exit()", "shutil.copy", "while"]
 
 #TODO: Create a loop system; Form a team to work with;
 #! Create a documentary and a new repository when b# has its first release!!!
@@ -18,17 +18,32 @@ def commandCheck(inputList):
     for x in range(len(inputList)):
         if "=" in inputList[x]:
             output += f"{inputList[x]}\n"
-        elif "loop":
-            "Loop system einbauen"
 
     return output
+
+def loopDetect(inputList): #! Under construction
+    y = 0
+    for x in inputList:
+        if "end loop" not in inputList[x] and y == True:
+            for i in range(0, y):
+                if i == 0:
+                    holder = inputList[x]
+                    inputList[x] = "    "
+                elif i != y:
+                    inputList[x] += "   "
+                elif i == y:
+                    inputList[x] += "   " + holder
+        if "start loop" in inputList[x]:
+            y += 1
 
 def secondaryCommandCheck(inputList):
     for x in range(len(inputList)):
         if "=" in inputList[x]:
             inputList[x] = ""
-        elif "loop property":
-            "LOOP PROPERTY EINBAUEN"
+        elif "start loop" in inputList[x]:
+            inputList[x] = ""
+        elif "end loop" in inputList[x]:
+            inputList[x] = ""
     return inputList
 
 def getReservedWordID(inputList):
@@ -53,7 +68,7 @@ def getReservedWordID(inputList):
             b.append("")
     for i in range(len(l)):
         try:
-            both.append([l[i], b[i].strip(" ")])
+            both.append([l[i], b[i].replace(" ", "")])
         except:
             ""
     i = 0
@@ -68,6 +83,7 @@ def getReservedWordID(inputList):
                 print(f"Your command at line {i} is not correct. \nYour code has been executed without the command '{both[i][0]}'.")
                 both[i][0] = ""
     return both
+
 
 
 def convertToPY(arrayOfCode, currentOutput):
