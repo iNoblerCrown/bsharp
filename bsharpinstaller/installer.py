@@ -1,7 +1,7 @@
 import shutil
 import os
 
-os.makedirs("C:\b#")
-shutil.move("main.py", "C:\b#")
-shutil.move("bs.bat", "C:\b#")
-shutil.move("bsharp.bat", "C:\b#")
+os.makedirs("C:\bsharp")
+shutil.move("main.py", "C:\bsharp")
+shutil.move("bs.bat", "C:\bsharp")
+shutil.move("bsharp.bat", "C:\bsharp")
