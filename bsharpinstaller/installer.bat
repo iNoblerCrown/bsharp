@@ -1,4 +1,4 @@
 python "installer.py"
-cd C:\b#
+cd C:\bsharp
 set y= "Write 'finish' to finish the installation."
 echo %y%
