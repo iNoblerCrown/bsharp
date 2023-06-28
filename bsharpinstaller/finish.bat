@@ -1,4 +1,4 @@
-python "cleanupins.py"
-set x= "Installation has been cleaned and is ready for use."
 @echo off
+
+set x= "Installation has been cleaned and is ready for use."
 echo %x%
