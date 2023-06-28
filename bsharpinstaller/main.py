@@ -68,7 +68,7 @@ def getReservedWordID(inputList):
             b.append("")
     for i in range(len(l)):
         try:
-            both.append([l[i], b[i].replace(" ", "")])
+            both.append([l[i], b[i].strip(" ")])
         except:
             ""
     i = 0
